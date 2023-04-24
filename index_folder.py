@@ -17,7 +17,7 @@ Tk().withdraw()
 
 # Dialog box for selecting a folder.
 file_import_path = askdirectory(title="Select a folder to IMPORT files from")
-file_move_path = askdirectory(title="Select a folder to MOVE files to")
+# file_move_path = askdirectory(title="Select a folder to MOVE files to")
 
 sql_model = SQLModel(url='sql.disruptivesoftware.com', user=username, password=password)
 
@@ -30,12 +30,12 @@ print(f'Querying database for hashes...')
 database_hash_set = sql_model.get_file_hashes()
 # database_path_set = sql_model.get_file_paths()
 
-print(f'Found {len(database_hash_set)} hashes in the database\n\n')
+# print(f'Found {len(database_hash_set)} hashes in the database\n\n')
 
-print('WARNING:  This will delete files if they are found in the database.\n')
+# print('WARNING:  This will delete files if they are found in the database.\n')
 
 print(f'SOURCE: {file_import_path}')
-print(f'DESTINATION: {file_move_path}\n\n')
+# print(f'DESTINATION: {file_move_path}\n\n')
 
 input('Press enter to continue')
 '''
@@ -66,29 +66,29 @@ for root, folders, files in list_of_files:
                 print(f'Skipping {file_path}')
                 continue
 
-            new_file_path = Path(os.path.join(file_move_path, file))
-            print(f'Moving {file_path}')
+            # new_file_path = Path(os.path.join(file_move_path, file))
+            # print(f'Moving {file_path}')
 
-            if new_file_path.exists():
-                # duplicate filename in destination folder
+            # if new_file_path.exists():
+            #     # duplicate filename in destination folder
 
-                split_string = file.split('.')
-                split_string.insert(-1, file_hash[:8])
-                new_filename = '.'.join(split_string)
+            #     split_string = file.split('.')
+            #     split_string.insert(-1, file_hash[:8])
+            #     new_filename = '.'.join(split_string)
 
-                print(f'Renaming to: {new_filename}')
+            #     print(f'Renaming to: {new_filename}')
 
-                new_file_path = Path(os.path.join(file_move_path, f'{new_filename}'))
+            #     new_file_path = Path(os.path.join(file_move_path, f'{new_filename}'))
 
-            shutil.move(file_path, new_file_path)
-            sql_model.add_file(file_hash, str(new_file_path))
-            database_hash_set.add(file_hash)
-            print(f'Added {new_file_path} to the database')
+            # shutil.move(file_path, new_file_path)
+            sql_model.add_file(file_hash, str(file_path))
+            # database_hash_set.add(file_hash)
+            print(f'Added {file_path} to the database')
             move_count += 1
-        else:
-            print(f'Deleting {file_path}')
-            os.remove(file_path)
-            delete_count += 1
+        # else:
+        # print(f'Deleting {file_path}')
+        # os.remove(file_path)
+        # delete_count += 1
 
-print(f'Deleted {delete_count} files')
-print(f'Moved {move_count} files')
+# print(f'Deleted {delete_count} files')
+print(f'Indexed {move_count} files')

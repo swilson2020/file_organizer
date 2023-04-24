@@ -47,7 +47,7 @@ If the file_hash is in the database.
 '''
 delete_count = 0
 move_count = 0
-skip_extensions = ('.txt', '.ini', '.jpg', '.png', '.jpeg', '.gif', '.db')
+skip_extensions = ('.txt', '.ini', '.db')
 skip_files = '.DS_Store'
 
 for root, folders, files in list_of_files:
